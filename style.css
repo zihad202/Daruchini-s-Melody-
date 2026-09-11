@@ -701,7 +701,18 @@ input {
 
     z-index: 100;
 
-    display: none;
+    /* ✨ Smooth opening */
+    opacity: 0;
+    visibility: hidden;
+
+    transform:
+        translateY(35px)
+        scale(.98);
+
+    transition:
+        opacity .35s ease,
+        transform .45s cubic-bezier(.22,1,.36,1),
+        visibility .35s ease;
 
     overflow-y: auto;
 
@@ -720,7 +731,12 @@ input {
 }
 
 .player-screen.show {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
 }
 
 .player-top {
@@ -1569,3 +1585,251 @@ input {
     }
 
   }
+
+/* =====================================================
+   ✨ SMOOTH PAGE & COMPONENT TRANSITIONS
+===================================================== */
+
+/* -------------------------------
+   NOW PLAYING SCREEN
+-------------------------------- */
+
+.player-screen {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(35px) scale(.98);
+    transition:
+        opacity .35s ease,
+        transform .45s cubic-bezier(.22,1,.36,1),
+        visibility .35s ease;
+}
+
+.player-screen.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+
+/* -------------------------------
+   MINI PLAYER
+-------------------------------- */
+
+.mini-player {
+    cursor: pointer;
+
+    opacity: 0;
+    transform:
+        translateX(-50%)
+        translateY(25px)
+        scale(.97);
+
+    animation: miniPlayerAppear .45s
+        cubic-bezier(.22,1,.36,1)
+        forwards;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.mini-player:hover {
+    transform:
+        translateX(-50%)
+        translateY(-2px)
+        scale(1.01);
+}
+
+.mini-player:active {
+    transform:
+        translateX(-50%)
+        translateY(1px)
+        scale(.98);
+}
+
+@keyframes miniPlayerAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateX(-50%)
+            translateY(25px)
+            scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* -------------------------------
+   MINI PLAYER CONTENT
+-------------------------------- */
+
+.mini-cover,
+.mini-info,
+.mini-play,
+.mini-previous,
+.mini-next {
+    transition:
+        transform .25s ease,
+        opacity .25s ease;
+}
+
+
+/* -------------------------------
+   BUTTON PRESS EFFECT
+-------------------------------- */
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:active {
+    transform: scale(.92);
+}
+
+
+/* -------------------------------
+   ICON BUTTON
+-------------------------------- */
+
+.icon-btn,
+.back-btn,
+.mini-play,
+.mini-previous,
+.mini-next {
+    transition:
+        transform .2s cubic-bezier(.22,1,.36,1),
+        background .2s ease,
+        opacity .2s ease;
+}
+
+
+/* -------------------------------
+   SONG / CARD HOVER
+-------------------------------- */
+
+.song-item,
+.playlist-card,
+.album-card,
+.artist-card {
+    transition:
+        transform .25s cubic-bezier(.22,1,.36,1),
+        background .25s ease,
+        box-shadow .25s ease;
+}
+
+.song-item:active,
+.playlist-card:active,
+.album-card:active,
+.artist-card:active {
+    transform: scale(.97);
+}
+
+
+/* =====================================================
+   ✨ GENERAL POPUP / MODAL TRANSITION
+===================================================== */
+
+.modal,
+.popup,
+.menu-popup,
+.bottom-sheet {
+    opacity: 0;
+    visibility: hidden;
+    transform:
+        translateY(20px)
+        scale(.97);
+
+    transition:
+        opacity .25s ease,
+        transform .35s cubic-bezier(.22,1,.36,1),
+        visibility .25s ease;
+}
+
+.modal.show,
+.popup.show,
+.menu-popup.show,
+.bottom-sheet.show {
+    opacity: 1;
+    visibility: visible;
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* =====================================================
+   ✨ SMOOTH FADE FOR PAGE CONTENT
+===================================================== */
+
+.page {
+    animation:
+        pageFadeIn .35s
+        cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes pageFadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =====================================================
+   ✨ COVER CHANGE ANIMATION
+===================================================== */
+
+.cover-change {
+    animation:
+        coverChange .4s
+        cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes coverChange {
+
+    0% {
+        opacity: .4;
+        transform: scale(.94);
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale(1.03);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* =====================================================
+   ✨ REDUCE MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
