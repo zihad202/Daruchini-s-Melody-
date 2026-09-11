@@ -57,7 +57,8 @@ const duration = document.getElementById("duration");
 
 const miniTitle = document.getElementById("miniTitle");
 const miniArtist = document.getElementById("miniArtist");
-
+const miniPlayer =
+    document.getElementById("miniPlayer");
 const playerTitle = document.getElementById("playerTitle");
 const playerArtist = document.getElementById("playerArtist");
 
@@ -3367,6 +3368,56 @@ closePlayer.addEventListener(
     }
 );
 
+/* =====================================================
+   MINI PLAYER → NOW PLAYING
+===================================================== */
+
+miniPlayer.addEventListener(
+    "click",
+    event => {
+
+        /*
+         * Mini player-এর Play,
+         * Previous এবং Next button-এ
+         * চাপলে Now Playing খুলবে না।
+         */
+        if (
+            event.target.closest("#miniPlayBtn") ||
+            event.target.closest("#miniPrevious") ||
+            event.target.closest("#miniNext")
+        ) {
+            return;
+        }
+
+
+        /*
+         * কোনো গান selected না থাকলে
+         * কিছুই করবে না।
+         */
+        if (
+            currentIndex < 0 ||
+            !songs[currentIndex]
+        ) {
+            return;
+        }
+
+
+        /*
+         * শুধু Now Playing screen খুলবে।
+         *
+         * এখানে playSong() ব্যবহার করা হচ্ছে না।
+         * তাই গান আবার শুরু হবে না।
+         */
+        updatePlayerUI();
+
+        updatePlayButtons();
+
+        playerScreen.classList.add(
+            "show"
+        );
+
+    }
+);
 
 /* =====================================================
    SEARCH
